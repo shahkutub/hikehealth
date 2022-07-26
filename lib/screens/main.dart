@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:active_ecommerce_flutter/custom/CommonFunctoins.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:active_ecommerce_flutter/screens/HomeCopy.dart';
 import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/category_list.dart';
 import 'package:active_ecommerce_flutter/screens/home.dart';
@@ -29,12 +30,14 @@ class _MainState extends State<Main> {
   int _currentIndex = 0;
   var _children = [
     //Home(),
-    HomeNew(),
+    //HomeNew(),
+    HomeCopy(),
     CategoryList(
       is_base_category: true,
     ),
     //Home(),
-    HomeNew(),
+    //HomeNew(),
+    HomeCopy(),
     Cart(has_bottomnav: true),
     Profile()
   ];
