@@ -1,17 +1,24 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:active_ecommerce_flutter/data_model/Banner.dart';
+import 'package:active_ecommerce_flutter/data_model/doctors.dart';
 import 'package:active_ecommerce_flutter/repositories/category_repository.dart';
+import 'package:active_ecommerce_flutter/repositories/sliders_repository.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../app_config.dart';
+import '../my_theme.dart';
 import 'category_products.dart';
 
 class HomeCopy extends StatefulWidget {
@@ -22,6 +29,7 @@ class HomeCopy extends StatefulWidget {
 class _HomeState extends State<HomeCopy> {
   var _carouselImageList = [];
   var _featuredCategoryList = [];
+  int _current_slider = 0;
   var _featuredProductList = [];
   bool _isProductInitial = true;
   bool _isCategoryInitial = true;
@@ -29,6 +37,10 @@ class _HomeState extends State<HomeCopy> {
   int _totalProductData = 0;
   int _productPage = 1;
   bool _showProductLoadingContainer = false;
+  TextEditingController _search = TextEditingController();
+  List<doctor> _searchResult = [];
+  List<doctor> doctorlist = [];
+  List<Add> banner = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -36,87 +48,110 @@ class _HomeState extends State<HomeCopy> {
     getPermission();
 
     fetchFeaturedCategories();
-    //getLocation();
-
-    //SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true ? Callapiforuserdetail() : "";
-    //callApiBanner();
-    // SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
-    //     ? Timer.periodic(Duration(minutes: 10), (Timer t) => callApiAppointment())
-    //     : "";
+    fetchCarouselImages();
   }
 
-  // Future<void> getLocation() async {
-  //   await Permission.storage.request();
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String? checkLat = prefs.getString('lat');
-  //   if (checkLat != "" && checkLat != null) {
-  //     _getAddress();
-  //   } else {
-  //     _locationData = await location.getLocation();
-  //     setState(
-  //       () {
-  //         prefs.setString('lat', _locationData.latitude.toString());
-  //         prefs.setString('lang', _locationData.longitude.toString());
-  //         print("${_locationData.latitude.toString()}  ${_locationData.longitude.toString()}");
-  //       },
-  //     );
-  //     _getAddress();
-  //   }
-  // }
-  //
-  // getLiveLocation() async {
-  //   _locationData = await location.getLocation();
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('latLive', _locationData.latitude.toString());
-  //   prefs.setString('langLive', _locationData.longitude.toString());
-  //   print("Live==   ${_locationData.latitude.toString()}  ${_locationData.longitude.toString()}");
-  // }
-  //
-  // _getAddress() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(
-  //     () {
-  //       _Address = prefs.getString('Address');
-  //       _lat = prefs.getString('lat');
-  //       _lang = prefs.getString('lang');
-  //       CallApi_DoctorList();
-  //       callApiTeatment();
-  //       callApIDisplayOffer();
-  //     },
-  //   );
-  // }
-  //
-  // _passDetail() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     user_phoneno = '$phone_no';
-  //     user_email = '$email';
-  //     user_name = '$name';
-  //   });
-  //   prefs.setString('phone_no', user_phoneno);
-  //   prefs.setString('email', user_email);
-  //   prefs.setString('name', user_name);
-  // }
-  //
-  // _passIsWhere() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('isWhere', "Home");
-  // }
-  //
-  // DateTime? currentBackPressTime;
-  //
-  //  Future<bool> onWillPop() {
-  //   DateTime now = DateTime.now();
-  //   if (currentBackPressTime == null || now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
-  //     currentBackPressTime = now;
-  //     Fluttertoast.showToast(
-  //       msg: getTranslated(context, exit_app).toString(),
-  //     );
-  //     return Future.value(false);
-  //   }
-  //   return Future.value(true);
-  // }
 
+  fetchCarouselImages() async {
+    var carouselResponse = await SlidersRepository().getSliders();
+    carouselResponse.sliders.forEach((slider) {
+      _carouselImageList.add(slider.photo);
+    });
+    _isCarouselInitial = false;
+    setState(() {});
+  }
+
+
+  buildHomeCarouselSlider(context) {
+    if (_isCarouselInitial && _carouselImageList.length == 0) {
+      return Padding(
+        padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+        child: Shimmer.fromColors(
+          baseColor: MyTheme.shimmer_base,
+          highlightColor: MyTheme.shimmer_highlighted,
+          child: Container(
+            height: 120,
+            width: double.infinity,
+            color: Colors.white,
+          ),
+        ),
+      );
+    } else if (_carouselImageList.length > 0) {
+      return CarouselSlider(
+        options: CarouselOptions(
+            aspectRatio: 2.67,
+            viewportFraction: 1,
+            initialPage: 0,
+            enableInfiniteScroll: true,
+            reverse: false,
+            autoPlay: true,
+            autoPlayInterval: Duration(seconds: 5),
+            autoPlayAnimationDuration: Duration(milliseconds: 1000),
+            autoPlayCurve: Curves.easeInCubic,
+            enlargeCenterPage: true,
+            scrollDirection: Axis.horizontal,
+            onPageChanged: (index, reason) {
+              setState(() {
+                _current_slider = index;
+              });
+            }),
+        items: _carouselImageList.map((i) {
+          return Builder(
+            builder: (BuildContext context) {
+              return Stack(
+                children: <Widget>[
+                  Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          child: FadeInImage.assetNetwork(
+                            placeholder: 'assets/placeholder_rectangle.png',
+                            image: AppConfig.BASE_PATH + i,
+                            fit: BoxFit.fill,
+                          ))),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: _carouselImageList.map((url) {
+                        int index = _carouselImageList.indexOf(url);
+                        return Container(
+                          width: 7.0,
+                          height: 7.0,
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 4.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _current_slider == index
+                                ? MyTheme.white
+                                : Color.fromRGBO(112, 112, 112, .3),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        }).toList(),
+      );
+    } else if (!_isCarouselInitial && _carouselImageList.length == 0) {
+      return Container(
+          height: 100,
+          child: Center(
+              child: Text('',
+                //AppLocalizations.of(context).home_screen_no_carousel_image_found,
+                style: TextStyle(color: MyTheme.font_grey),
+              )));
+    } else {
+      // should not be happening
+      return Container(
+        height: 100,
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     double width;
@@ -128,7 +163,95 @@ class _HomeState extends State<HomeCopy> {
     return WillPopScope(
       //onWillPop: onWillPop,
       child: Scaffold(
+        appBar: AppBar(
+          actions: [
+                    Container(
+                      alignment: Alignment.center,
+                      width: width-20,
+                      //margin: EdgeInsets.only(left: width * 0.05, right: width * 0.05, top: height * 0.01),
+                      child: Card(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Container(
+                          //width: width * 1,
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+                          child: TextField(
+                            textCapitalization: TextCapitalization.words,
+                            onChanged: onSearchTextChanged,
+                            decoration: InputDecoration(
+                              //hintText: getTranslated(context, home_searchDoctor).toString(),
+                              hintText: 'Search',
+                              hintStyle: TextStyle(
+                                fontSize: width * 0.04,
+                                color: Colors.blue,
+                              ),
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: SvgPicture.asset(
+                                  'assets/icons/SearchIcon.svg',
+                                  height: 15,
+                                  width: 15,
+                                ),
+                              ),
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+          ],
+        ),
+        // PreferredSize(
+        //   preferredSize: Size(width, 70),
+        //   child:
 
+          // SafeArea(
+          //   top: true,
+          //   child: Container(
+          //     child: Column(
+          //       children: [
+          //
+          //         Container(
+          //           margin: EdgeInsets.only(left: width * 0.05, right: width * 0.05, top: height * 0.01),
+          //           child: Card(
+          //             color: Colors.white,
+          //             shape: RoundedRectangleBorder(
+          //               borderRadius: BorderRadius.circular(50),
+          //             ),
+          //             child: Container(
+          //               width: width * 1,
+          //               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+          //               child: TextField(
+          //                 textCapitalization: TextCapitalization.words,
+          //                 onChanged: onSearchTextChanged,
+          //                 decoration: InputDecoration(
+          //                   //hintText: getTranslated(context, home_searchDoctor).toString(),
+          //                   hintText: 'Search',
+          //                   hintStyle: TextStyle(
+          //                     fontSize: width * 0.04,
+          //                     color: Colors.blue,
+          //                   ),
+          //                   suffixIcon: Padding(
+          //                     padding: const EdgeInsets.all(12),
+          //                     child: SvgPicture.asset(
+          //                       'assets/icons/SearchIcon.svg',
+          //                       height: 15,
+          //                       width: 15,
+          //                     ),
+          //                   ),
+          //                   border: InputBorder.none,
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+        //),
 
         body: GestureDetector(
           onTap: () {
@@ -141,6 +264,16 @@ class _HomeState extends State<HomeCopy> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
 
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      8.0,
+                      0.0,
+                      8.0,
+                      0.0,
+                    ),
+                    child: buildHomeCarouselSlider(context),
+                  ),
+                  SizedBox(height: 20,),
                   //  top view //
                   Row(
                     children: [
@@ -401,7 +534,7 @@ class _HomeState extends State<HomeCopy> {
                             );
                           },
                           child: new Card(
-                            margin: EdgeInsets.all(10),
+                            margin: EdgeInsets.only(left: 10,right: 10,bottom: 50),
                             color: Colors.white,
                             elevation: 5,
                             shape: RoundedRectangleBorder(
@@ -460,7 +593,7 @@ class _HomeState extends State<HomeCopy> {
                           },
 
                           child: new Card(
-                            margin: EdgeInsets.all(10),
+                            margin: EdgeInsets.only(left: 10,right: 10,bottom: 50),
                             color: Colors.white,
                             elevation: 5,
                             shape: RoundedRectangleBorder(
@@ -510,6 +643,9 @@ class _HomeState extends State<HomeCopy> {
         ),
       ),
     );
+
+
+
     /*
     return WillPopScope(
       onWillPop: onWillPop,
@@ -2571,6 +2707,19 @@ class _HomeState extends State<HomeCopy> {
     */
   }
 
+  onSearchTextChanged(String text) async {
+    _searchResult.clear();
+    if (text.isEmpty) {
+      setState(() {});
+      return;
+    }
+
+    doctorlist.forEach((appointmentData) {
+      if (appointmentData.name.toLowerCase().contains(text.toLowerCase())) _searchResult.add(appointmentData);
+    });
+
+    setState(() {});
+  }
 
   fetchFeaturedCategories() async {
     var categoryResponse = await CategoryRepository().getFeturedCategories();
