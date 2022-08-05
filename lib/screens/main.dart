@@ -154,13 +154,13 @@ class _MainState extends State<Main> {
                           style: TextStyle(fontSize: 12),
                         ),
                       )),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.circle,
-                      color: Colors.transparent,
-                    ),
-                    title: Text(""),
-                  ),
+                   BottomNavigationBarItem(
+                     icon: Icon(
+                       Icons.circle,
+                       color: Colors.transparent,
+                     ),
+                     title: Text(""),
+                   ),
                   BottomNavigationBarItem(
                       icon: Image.asset(
                         "assets/cart.png",

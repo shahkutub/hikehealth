@@ -164,6 +164,7 @@ class _HomeState extends State<HomeCopy> {
       //onWillPop: onWillPop,
       child: Scaffold(
         appBar: AppBar(
+
           actions: [
                     Container(
                       alignment: Alignment.center,
@@ -202,6 +203,7 @@ class _HomeState extends State<HomeCopy> {
                       ),
                     ),
           ],
+          backgroundColor: Colors.white,
         ),
         // PreferredSize(
         //   preferredSize: Size(width, 70),
