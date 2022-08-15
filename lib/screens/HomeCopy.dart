@@ -159,52 +159,872 @@ class _HomeState extends State<HomeCopy> {
 
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
     return WillPopScope(
       //onWillPop: onWillPop,
       child: Scaffold(
-        appBar: AppBar(
-
-          actions: [
-                    Container(
-                      alignment: Alignment.center,
-                      width: width-20,
-                      //margin: EdgeInsets.only(left: width * 0.05, right: width * 0.05, top: height * 0.01),
-                      child: Card(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Container(
-                          //width: width * 1,
-                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
-                          child: TextField(
-                            textCapitalization: TextCapitalization.words,
-                            onChanged: onSearchTextChanged,
-                            decoration: InputDecoration(
-                              //hintText: getTranslated(context, home_searchDoctor).toString(),
-                              hintText: 'Search',
-                              hintStyle: TextStyle(
-                                fontSize: width * 0.04,
+        key: _scaffoldKey,
+        // Drawer //
+        drawer: Drawer(
+          child: Column(
+            children: [
+              //SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+                 /// ?
+              Expanded(
+                //flex: 3,
+                child: DrawerHeader(
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: 60,
+                          height: 80,
+                          alignment: AlignmentDirectional.center,
+                          decoration: new BoxDecoration(
+                            shape: BoxShape.circle, // BoxShape.circle or BoxShape.retangle
+                            boxShadow: [
+                              new BoxShadow(
                                 color: Colors.blue,
+                                blurRadius: 1.0,
                               ),
-                              suffixIcon: Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: SvgPicture.asset(
-                                  'assets/icons/SearchIcon.svg',
-                                  height: 15,
-                                  width: 15,
+                            ],
+                          ),
+                          // child: CachedNetworkImage(
+                          //   alignment: Alignment.center,
+                          //   imageUrl: image!,
+                          //   imageBuilder: (context, imageProvider) => CircleAvatar(
+                          //     radius: 50,
+                          //     backgroundColor: Palette.white,
+                          //     child: CircleAvatar(
+                          //       radius: 30,
+                          //       backgroundImage: imageProvider,
+                          //     ),
+                          //   ),
+                          //   placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
+                          //   errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg"),
+                          // ),
+                        ),
+                        Container(
+                          width: 150,
+                          height: 55,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  alignment: AlignmentDirectional.topStart,
+                                  // child: Text(
+                                  //   '$name',
+                                  //   style: TextStyle(
+                                  //     fontSize: width * 0.05,
+                                  //     color: Palette.dark_blue,
+                                  //   ),
+                                  //   overflow: TextOverflow.ellipsis,
+                                  // ),
+                                ),
+                                Container(
+                                  alignment: AlignmentDirectional.topStart,
+                                  // child: Text(
+                                  //   '$email',
+                                  //   style: TextStyle(
+                                  //     fontSize: width * 0.035,
+                                  //     color: Palette.grey,
+                                  //   ),
+                                  //   overflow: TextOverflow.ellipsis,
+                                  // ),
+                                ),
+                                Container(
+                                  alignment: AlignmentDirectional.topStart,
+                                  // child: Text(
+                                  //   '$phone_no',
+                                  //   style: TextStyle(
+                                  //     fontSize: width * 0.035,
+                                  //     color: Palette.grey,
+                                  //   ),
+                                  // ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          alignment: AlignmentDirectional.center,
+                          margin: EdgeInsets.only(top: 20),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, 'profile');
+                              },
+                              child: SvgPicture.asset(
+                                'assets/icons/edit.svg',
+                                height: 20,
+                                width: 20,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+                  //:
+
+              Expanded(
+                //flex: 1,
+                child: DrawerHeader(
+                  child: Container(
+                    alignment: AlignmentDirectional.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, 'SignIn');
+                          },
+                          child: Container(
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(width * 0.06),
+                              ),
+                              color: Colors.white,
+                              shadowColor: Colors.grey,
+                              elevation: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                                child: Text('SignIn',
+                                  //getTranslated(context, home_signIn_button).toString(),
+                                  style: TextStyle(fontSize: width * 0.04, color: Colors.blueAccent),
                                 ),
                               ),
-                              border: InputBorder.none,
                             ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, 'signup');
+                          },
+                          child: Container(
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(width * 0.06),
+                              ),
+                              color: Colors.white,
+                              shadowColor: Colors.grey,
+                              elevation: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                                child: Text("SignUp",
+                                  //getTranslated(context, home_signUp_button).toString(),
+                                  style: TextStyle(
+                                    fontSize: width * 0.04,
+                                    color: Colors.blueAccent,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              // Expanded(
+              //   flex: 12,
+              //   child: Container(
+              //     margin: EdgeInsets.only(left: 5, right: 20),
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //       children: [
+              //         ListTile(
+              //           onTap: () {
+              //             Navigator.popAndPushNamed(context, 'Specialist');
+              //           },
+              //           horizontalTitleGap:2.0,
+              //           leading:Icon(
+              //             Icons.medication,
+              //             size: 35,
+              //             color:Palette.green,
+              //           ),
+              //           title: Text(
+              //             getTranslated(context, home_book_appointment).toString(),
+              //             style: TextStyle(
+              //               fontSize: width * 0.04,
+              //               color: Palette.dark_blue,
+              //             ),
+              //           ),
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              //           child: Column(
+              //             children: [
+              //               DottedLine(
+              //                 direction: Axis.horizontal,
+              //                 lineLength: double.infinity,
+              //                 lineThickness: 1.0,
+              //                 dashLength: 3.0,
+              //                 dashColor: Palette.dash_line,
+              //                 dashRadius: 0.0,
+              //                 dashGapLength: 1.0,
+              //                 dashGapColor: Palette.transparent,
+              //                 dashGapRadius: 0.0,
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //         ListTile(
+              //           onTap: () {
+              //             SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+              //                 ? Navigator.popAndPushNamed(context, 'Appointment')
+              //                 : FormHelper.showMessage(
+              //               context,
+              //               getTranslated(context, home_medicineOrder_alert_title).toString(),
+              //               getTranslated(context, home_medicineOrder_alert_text).toString(),
+              //               getTranslated(context, cancel).toString(),
+              //                   () {
+              //                 Navigator.of(context).pop();
+              //               },
+              //               buttonText2: getTranslated(context, login).toString(),
+              //               isConfirmationDialog: true,
+              //               onPressed2: () {
+              //                 Navigator.pushNamed(context, 'SignIn');
+              //               },
+              //             );
+              //           },
+              //           horizontalTitleGap:2.0,
+              //           leading:Icon(
+              //             Icons.schedule,
+              //             size: 35,
+              //             color:Palette.green,
+              //           ),
+              //           title: Text(
+              //             getTranslated(context, home_appointments).toString(),
+              //             style: TextStyle(
+              //               fontSize: width * 0.04,
+              //               color: Palette.dark_blue,
+              //             ),
+              //           ),
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              //           child: Column(
+              //             children: [
+              //               DottedLine(
+              //                 direction: Axis.horizontal,
+              //                 lineLength: double.infinity,
+              //                 lineThickness: 1.0,
+              //                 dashLength: 3.0,
+              //                 dashColor: Palette.dash_line,
+              //                 dashRadius: 0.0,
+              //                 dashGapLength: 1.0,
+              //                 dashGapColor: Palette.transparent,
+              //                 dashGapRadius: 0.0,
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //         /*ListTile(
+              //           onTap: () {
+              //             SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+              //                 ? Navigator.popAndPushNamed(context, 'Favoritedoctor')
+              //                 : FormHelper.showMessage(
+              //               context,
+              //               getTranslated(context, home_favoriteDoctor_alert_title).toString(),
+              //               getTranslated(context, home_favoriteDoctor_alert_text).toString(),
+              //               getTranslated(context, cancel).toString(),
+              //                   () {
+              //                 Navigator.of(context).pop();
+              //               },
+              //               buttonText2: getTranslated(context, login).toString(),
+              //               isConfirmationDialog: true,
+              //               onPressed2: () {
+              //                 Navigator.pushNamed(context, 'SignIn');
+              //               },
+              //             );
+              //           },
+              //           horizontalTitleGap:2.0,
+              //           leading:Icon(
+              //             Icons.ten_k_rounded,
+              //             size: 35,
+              //             color:Palette.green,
+              //           ),
+              //           title: Text(
+              //             getTranslated(context, home_favoritesDoctor).toString(),
+              //             style: TextStyle(
+              //               fontSize: width * 0.04,
+              //               color: Palette.dark_blue,
+              //             ),
+              //           ),
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              //           child: Column(
+              //             children: [
+              //               DottedLine(
+              //                 direction: Axis.horizontal,
+              //                 lineLength: double.infinity,
+              //                 lineThickness: 1.0,
+              //                 dashLength: 3.0,
+              //                 dashColor: Palette.dash_line,
+              //                 dashRadius: 0.0,
+              //                 dashGapLength: 1.0,
+              //                 dashGapColor: Palette.transparent,
+              //                 dashGapRadius: 0.0,
+              //               )
+              //             ],
+              //           ),
+              //         ), */
+              //         ListTile(
+              //           onTap: () {
+              //             Navigator.popAndPushNamed(context, 'Medicine');
+              //           },
+              //           horizontalTitleGap:2.0,
+              //           leading:Icon(
+              //             Icons.local_hospital,
+              //             size: 35,
+              //             color:Palette.green,
+              //           ),
+              //           title: Text(
+              //             getTranslated(context, home_medicineBuy).toString(),
+              //             style: TextStyle(
+              //               fontSize: width * 0.04,
+              //               color: Palette.dark_blue,
+              //             ),
+              //           ),
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              //           child: Column(
+              //             children: [
+              //               DottedLine(
+              //                 direction: Axis.horizontal,
+              //                 lineLength: double.infinity,
+              //                 lineThickness: 1.0,
+              //                 dashLength: 3.0,
+              //                 dashColor: Palette.dash_line,
+              //                 dashRadius: 0.0,
+              //                 dashGapLength: 1.0,
+              //                 dashGapColor: Palette.transparent,
+              //                 dashGapRadius: 0.0,
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //         ListTile(
+              //           onTap: () {
+              //             Navigator.popAndPushNamed(context, 'Product');
+              //           },
+              //           horizontalTitleGap:2.0,
+              //           leading:Icon(
+              //             Icons.medical_services,
+              //             size: 35,
+              //             color:Palette.green,
+              //           ),
+              //           title: Text(
+              //             getTranslated(context, home_productBuy).toString(),
+              //             style: TextStyle(
+              //               fontSize: width * 0.04,
+              //               color: Palette.dark_blue,
+              //             ),
+              //           ),
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              //           child: Column(
+              //             children: [
+              //               DottedLine(
+              //                 direction: Axis.horizontal,
+              //                 lineLength: double.infinity,
+              //                 lineThickness: 1.0,
+              //                 dashLength: 3.0,
+              //                 dashColor: Palette.dash_line,
+              //                 dashRadius: 0.0,
+              //                 dashGapLength: 1.0,
+              //                 dashGapColor: Palette.transparent,
+              //                 dashGapRadius: 0.0,
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //         ExpansionTile(
+              //           title: new Text('My Orders', style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),),
+              //           children: <Widget>[
+              //             Column(
+              //               children: <Widget>[
+              //                 ListTile(
+              //                   onTap: () {
+              //                     SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+              //                         ? Navigator.popAndPushNamed(context, 'MedicineOrder')
+              //                         : FormHelper.showMessage(
+              //                       context,
+              //                       getTranslated(context, home_medicineBuy_alert_title).toString(),
+              //                       getTranslated(context, home_medicineBuy_alert_text).toString(),
+              //                       getTranslated(context, cancel).toString(),
+              //                           () {
+              //                         Navigator.of(context).pop();
+              //                       },
+              //                       buttonText2: getTranslated(context, login).toString(),
+              //                       isConfirmationDialog: true,
+              //                       onPressed2: () {
+              //                         Navigator.pushNamed(context, 'SignIn');
+              //                       },
+              //                     );
+              //                   },
+              //                   horizontalTitleGap:1.0,
+              //                   leading:Icon(
+              //                     Icons.circle,
+              //                     size: 25,
+              //                     color:Palette.green,
+              //                   ),
+              //                   title: Text(
+              //                     getTranslated(context, home_orderHistory).toString(),
+              //                     style: TextStyle(
+              //                       fontSize: width * 0.04,
+              //                       color: Palette.dark_blue,
+              //                     ),
+              //                   ),
+              //                 ),
+              //                 ListTile(
+              //                   onTap: () {
+              //                     SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+              //                         ? Navigator.popAndPushNamed(context, 'ProductOrder')
+              //                         : FormHelper.showMessage(
+              //                       context,
+              //                       getTranslated(context, home_medicineBuy_alert_title).toString(),
+              //                       getTranslated(context, home_medicineBuy_alert_text).toString(),
+              //                       getTranslated(context, cancel).toString(),
+              //                           () {
+              //                         Navigator.of(context).pop();
+              //                       },
+              //                       buttonText2: getTranslated(context, login).toString(),
+              //                       isConfirmationDialog: true,
+              //                       onPressed2: () {
+              //                         Navigator.pushNamed(context, 'SignIn');
+              //                       },
+              //                     );
+              //                   },
+              //                   horizontalTitleGap:1.0,
+              //                   leading:Icon(
+              //                     Icons.circle,
+              //                     size: 25,
+              //                     color:Palette.green,
+              //                   ),
+              //                   title: Text(
+              //                     getTranslated(context, home_productOrderHistory).toString(),
+              //                     style: TextStyle(
+              //                       fontSize: width * 0.04,
+              //                       color: Palette.dark_blue,
+              //                     ),
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //           ],
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              //           child: Column(
+              //             children: [
+              //               DottedLine(
+              //                 direction: Axis.horizontal,
+              //                 lineLength: double.infinity,
+              //                 lineThickness: 1.0,
+              //                 dashLength: 3.0,
+              //                 dashColor: Palette.dash_line,
+              //                 dashRadius: 0.0,
+              //                 dashGapLength: 1.0,
+              //                 dashGapColor: Palette.transparent,
+              //                 dashGapRadius: 0.0,
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //         ListTile(
+              //           onTap: () {
+              //             Navigator.popAndPushNamed(context, 'HealthTips');
+              //           },
+              //           horizontalTitleGap:2.0,
+              //           leading:Icon(
+              //             Icons.coffee,
+              //             size: 35,
+              //             color:Palette.green,
+              //           ),
+              //           title: Text(
+              //             getTranslated(context, home_healthTips).toString(),
+              //             style: TextStyle(
+              //               fontSize: width * 0.04,
+              //               color: Palette.dark_blue,
+              //             ),
+              //           ),
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              //           child: Column(
+              //             children: [
+              //               DottedLine(
+              //                 direction: Axis.horizontal,
+              //                 lineLength: double.infinity,
+              //                 lineThickness: 1.0,
+              //                 dashLength: 3.0,
+              //                 dashColor: Palette.dash_line,
+              //                 dashRadius: 0.0,
+              //                 dashGapLength: 1.0,
+              //                 dashGapColor: Palette.transparent,
+              //                 dashGapRadius: 0.0,
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //         ListTile(
+              //           onTap: () {
+              //             Navigator.popAndPushNamed(context, 'Offer');
+              //           },
+              //           horizontalTitleGap:2.0,
+              //           leading:Icon(
+              //             Icons.local_offer,
+              //             size: 35,
+              //             color:Palette.green,
+              //           ),
+              //           title: Text(
+              //             getTranslated(context, home_offers).toString(),
+              //             style: TextStyle(
+              //               fontSize: width * 0.04,
+              //               color: Palette.dark_blue,
+              //             ),
+              //           ),
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              //           child: Column(
+              //             children: [
+              //               DottedLine(
+              //                 direction: Axis.horizontal,
+              //                 lineLength: double.infinity,
+              //                 lineThickness: 1.0,
+              //                 dashLength: 3.0,
+              //                 dashColor: Palette.dash_line,
+              //                 dashRadius: 0.0,
+              //                 dashGapLength: 1.0,
+              //                 dashGapColor: Palette.transparent,
+              //                 dashGapRadius: 0.0,
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //         ListTile(
+              //           onTap: () {
+              //             SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+              //                 ? Navigator.popAndPushNamed(context, 'notifications')
+              //                 : FormHelper.showMessage(
+              //               context,
+              //               getTranslated(context, home_notification_alert_title).toString(),
+              //               getTranslated(context, home_notification_alert_text).toString(),
+              //               getTranslated(context, cancel).toString(),
+              //                   () {
+              //                 Navigator.of(context).pop();
+              //               },
+              //               buttonText2: getTranslated(context, login).toString(),
+              //               isConfirmationDialog: true,
+              //               onPressed2: () {
+              //                 Navigator.pushNamed(context, 'SignIn');
+              //               },
+              //             );
+              //           },
+              //           horizontalTitleGap:2.0,
+              //           leading:Icon(
+              //             Icons.doorbell,
+              //             size: 35,
+              //             color:Palette.green,
+              //           ),
+              //           title: Text(
+              //             getTranslated(context, home_notification).toString(),
+              //             style: TextStyle(
+              //               fontSize: width * 0.04,
+              //               color: Palette.dark_blue,
+              //             ),
+              //           ),
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              //           child: Column(
+              //             children: [
+              //               DottedLine(
+              //                 direction: Axis.horizontal,
+              //                 lineLength: double.infinity,
+              //                 lineThickness: 1.0,
+              //                 dashLength: 3.0,
+              //                 dashColor: Palette.dash_line,
+              //                 dashRadius: 0.0,
+              //                 dashGapLength: 1.0,
+              //                 dashGapColor: Palette.transparent,
+              //                 dashGapRadius: 0.0,
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //         ListTile(
+              //           onTap: () {
+              //             Navigator.popAndPushNamed(context, 'Setting');
+              //           },
+              //           horizontalTitleGap:2.0,
+              //           leading:Icon(
+              //             Icons.app_settings_alt,
+              //             size: 35,
+              //             color:Palette.green,
+              //           ),
+              //           title: Text(
+              //             getTranslated(context, home_settings).toString(),
+              //             style: TextStyle(
+              //               fontSize: width * 0.04,
+              //               color: Palette.dark_blue,
+              //             ),
+              //           ),
+              //         ),
+              //         Container(
+              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              //           child: Column(
+              //             children: [
+              //               DottedLine(
+              //                 direction: Axis.horizontal,
+              //                 lineLength: double.infinity,
+              //                 lineThickness: 1.0,
+              //                 dashLength: 2.0,
+              //                 dashColor: Palette.dash_line,
+              //                 dashRadius: 0.0,
+              //                 dashGapLength: 1.0,
+              //                 dashGapColor: Palette.transparent,
+              //                 dashGapRadius: 0.0,
+              //               )
+              //             ],
+              //           ),
+              //         ),
+              //         ListTile(
+              //           title: SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+              //               ? GestureDetector(
+              //             onTap: () {
+              //               FormHelper.showMessage(
+              //                 context,
+              //                 getTranslated(context, home_logout_alert_title).toString(),
+              //                 getTranslated(context, home_logout_alert_text).toString(),
+              //                 getTranslated(context, cancel).toString(),
+              //                     () {
+              //                   Navigator.of(context).pop();
+              //                 },
+              //                 buttonText2: getTranslated(context, home_logout_alert_title).toString(),
+              //                 isConfirmationDialog: true,
+              //                 onPressed2: () {
+              //                   Preferences.checkNetwork().then((value) => value == true ? logoutUser() : print('No int'));
+              //                 },
+              //               );
+              //             },
+              //             child: Text(
+              //               getTranslated(context, home_logout).toString(),
+              //               style: TextStyle(
+              //                 fontSize: width * 0.04,
+              //                 color: Palette.dark_blue,
+              //                 //backgroundColor:Palette.dark_blue,
+              //               ),
+              //             ),
+              //           )
+              //               : Text(
+              //             '',
+              //             style: TextStyle(
+              //               fontSize: width * 0.04,
+              //               color: Palette.dark_blue,
+              //             ),
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              //
+              // )
+            ],
+          ),
+        ),
+        appBar: PreferredSize(
+          preferredSize: Size(width, 130),
+          child: SafeArea(
+            top: true,
+            child: Container(
+              child: Row(
+                children: [
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     _passIsWhere();
+                        //     SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+                        //         ? Navigator.pushNamed(context, 'ShowLocation')
+                        //         : SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+                        //         ? Navigator.popAndPushNamed(context, 'MedicineOrder')
+                        //         : FormHelper.showMessage(
+                        //       context,
+                        //       getTranslated(context, home_selectAddress_alert_title).toString(),
+                        //       getTranslated(context, home_selectAddress_alert_text).toString(),
+                        //       getTranslated(context, cancel).toString(),
+                        //           () {
+                        //         Navigator.of(context).pop();
+                        //       },
+                        //       buttonText2: getTranslated(context, login).toString(),
+                        //       isConfirmationDialog: true,
+                        //       onPressed2: () {
+                        //         Navigator.pushNamed(context, 'SignIn');
+                        //       },
+                        //     );
+                        //   },
+                        //   child: Row(
+                        //     children: [
+                        //       Container(
+                        //         margin: EdgeInsets.only(top: height * 0.01, left: width * 0.03, right: width * 0.03),
+                        //         height: 25,
+                        //         width: 20,
+                        //         child: SvgPicture.asset(
+                        //           'assets/icons/location.svg',
+                        //         ),
+                        //       ),
+                        //       Row(
+                        //         children: [
+                        //           Container(
+                        //             width: 120,
+                        //             padding: EdgeInsets.only(top: height * 0.01, left: width * 0.03, right: width * 0.03),
+                        //             child: _Address == null || _Address == ""
+                        //                 ? Text(
+                        //               getTranslated(context, home_selectAddress).toString(),
+                        //               overflow: TextOverflow.ellipsis,
+                        //               style: TextStyle(
+                        //                 fontSize: width * 0.035,
+                        //                 fontWeight: FontWeight.bold,
+                        //                 color: Palette.dark_blue,
+                        //               ),
+                        //             )
+                        //                 : Text(
+                        //               '$_Address',
+                        //               overflow: TextOverflow.ellipsis,
+                        //               style: TextStyle(
+                        //                 fontSize: width * 0.04,
+                        //                 fontWeight: FontWeight.bold,
+                        //                 color: Palette.dark_blue,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //           Container(
+                        //             margin: EdgeInsets.only(top: width * 0.02),
+                        //             height: 15,
+                        //             width: 15,
+                        //             child: SvgPicture.asset(
+                        //               'assets/icons/down.svg',
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                        Container(
+                          padding: EdgeInsets.only(right: 10, left: 10),
+                          child: IconButton(
+                            onPressed: () {
+                              _scaffoldKey.currentState.openDrawer();
+                            },
+                            icon: SvgPicture.asset(
+                              'assets/menu.svg',
+                              height: 15,
+                              width: 15,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 5, right: width * 0.05, top: height * 0.01),
+                    child: Card(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: Container(
+                        width: width - 110,
+                        padding: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
+                        child: TextField(
+                          textCapitalization: TextCapitalization.words,
+                          onChanged: onSearchTextChanged,
+                          decoration: InputDecoration(
+                            //hintText: getTranslated(context, home_searchDoctor).toString(),
+                            hintText: 'Serch',
+                            hintStyle: TextStyle(
+                              fontSize: width * 0.04,
+                              color: Colors.blueAccent,
+                            ),
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: SvgPicture.asset(
+                                'assets/SearchIcon.svg',
+                                height: 15,
+                                width: 15,
+                              ),
+                            ),
+                            border: InputBorder.none,
                           ),
                         ),
                       ),
                     ),
-          ],
-          backgroundColor: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
+        // appBar: AppBar(
+        //
+        //   actions: [
+        //             Container(
+        //               alignment: Alignment.center,
+        //               width: width-20,
+        //               //margin: EdgeInsets.only(left: width * 0.05, right: width * 0.05, top: height * 0.01),
+        //               child: Card(
+        //                 color: Colors.white,
+        //                 shape: RoundedRectangleBorder(
+        //                   borderRadius: BorderRadius.circular(50),
+        //                 ),
+        //                 child: Container(
+        //                   //width: width * 1,
+        //                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+        //                   child: TextField(
+        //                     textCapitalization: TextCapitalization.words,
+        //                     onChanged: onSearchTextChanged,
+        //                     decoration: InputDecoration(
+        //                       //hintText: getTranslated(context, home_searchDoctor).toString(),
+        //                       hintText: 'Search',
+        //                       hintStyle: TextStyle(
+        //                         fontSize: width * 0.04,
+        //                         color: Colors.blue,
+        //                       ),
+        //                       suffixIcon: Padding(
+        //                         padding: const EdgeInsets.all(12),
+        //                         child: SvgPicture.asset(
+        //                           'assets/icons/SearchIcon.svg',
+        //                           height: 15,
+        //                           width: 15,
+        //                         ),
+        //                       ),
+        //                       border: InputBorder.none,
+        //                     ),
+        //                   ),
+        //                 ),
+        //               ),
+        //             ),
+        //   ],
+        //   backgroundColor: Colors.white,
+        // ),
         // PreferredSize(
         //   preferredSize: Size(width, 70),
         //   child:
@@ -275,7 +1095,7 @@ class _HomeState extends State<HomeCopy> {
                     ),
                     child: buildHomeCarouselSlider(context),
                   ),
-                  SizedBox(height: 20,),
+                  //SizedBox(height: 20,),
                   //  top view //
                   Row(
                     children: [
