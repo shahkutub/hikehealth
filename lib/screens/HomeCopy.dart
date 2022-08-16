@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:active_ecommerce_flutter/const/Palette.dart';
+import 'package:active_ecommerce_flutter/const/prefConstatnt.dart';
+import 'package:active_ecommerce_flutter/const/preference.dart';
 import 'package:active_ecommerce_flutter/data_model/Banner.dart';
 import 'package:active_ecommerce_flutter/data_model/doctors.dart';
 import 'package:active_ecommerce_flutter/repositories/category_repository.dart';
@@ -27,6 +30,18 @@ class HomeCopy extends StatefulWidget {
 }
 
 class _HomeState extends State<HomeCopy> {
+  String _Address = "";
+  String _lat = "";
+  String _lang = "";
+  String name = "";
+  String email = "";
+  String phone_no = "";
+  String image = "";
+
+  String user_phoneno = "";
+  String user_email = "";
+  String user_name = "";
+
   var _carouselImageList = [];
   var _featuredCategoryList = [];
   int _current_slider = 0;
@@ -216,35 +231,35 @@ class _HomeState extends State<HomeCopy> {
                               children: [
                                 Container(
                                   alignment: AlignmentDirectional.topStart,
-                                  // child: Text(
-                                  //   '$name',
-                                  //   style: TextStyle(
-                                  //     fontSize: width * 0.05,
-                                  //     color: Palette.dark_blue,
-                                  //   ),
-                                  //   overflow: TextOverflow.ellipsis,
-                                  // ),
+                                  child: Text(
+                                    '$name',
+                                    style: TextStyle(
+                                      fontSize: width * 0.05,
+                                      color: Palette.dark_blue,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                                 Container(
                                   alignment: AlignmentDirectional.topStart,
-                                  // child: Text(
-                                  //   '$email',
-                                  //   style: TextStyle(
-                                  //     fontSize: width * 0.035,
-                                  //     color: Palette.grey,
-                                  //   ),
-                                  //   overflow: TextOverflow.ellipsis,
-                                  // ),
+                                  child: Text(
+                                    '$email',
+                                    style: TextStyle(
+                                      fontSize: width * 0.035,
+                                      color: Palette.grey,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                                 Container(
                                   alignment: AlignmentDirectional.topStart,
-                                  // child: Text(
-                                  //   '$phone_no',
-                                  //   style: TextStyle(
-                                  //     fontSize: width * 0.035,
-                                  //     color: Palette.grey,
-                                  //   ),
-                                  // ),
+                                  child: Text(
+                                    '$phone_no',
+                                    style: TextStyle(
+                                      fontSize: width * 0.035,
+                                      color: Palette.grey,
+                                    ),
+                                  ),
                                 )
                               ],
                             ),
@@ -334,516 +349,516 @@ class _HomeState extends State<HomeCopy> {
                   ),
                 ),
               ),
-              // Expanded(
-              //   flex: 12,
-              //   child: Container(
-              //     margin: EdgeInsets.only(left: 5, right: 20),
-              //     child: Column(
-              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //       children: [
-              //         ListTile(
-              //           onTap: () {
-              //             Navigator.popAndPushNamed(context, 'Specialist');
-              //           },
-              //           horizontalTitleGap:2.0,
-              //           leading:Icon(
-              //             Icons.medication,
-              //             size: 35,
-              //             color:Palette.green,
-              //           ),
-              //           title: Text(
-              //             getTranslated(context, home_book_appointment).toString(),
-              //             style: TextStyle(
-              //               fontSize: width * 0.04,
-              //               color: Palette.dark_blue,
-              //             ),
-              //           ),
-              //         ),
-              //         Container(
-              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              //           child: Column(
-              //             children: [
-              //               DottedLine(
-              //                 direction: Axis.horizontal,
-              //                 lineLength: double.infinity,
-              //                 lineThickness: 1.0,
-              //                 dashLength: 3.0,
-              //                 dashColor: Palette.dash_line,
-              //                 dashRadius: 0.0,
-              //                 dashGapLength: 1.0,
-              //                 dashGapColor: Palette.transparent,
-              //                 dashGapRadius: 0.0,
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //         ListTile(
-              //           onTap: () {
-              //             SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
-              //                 ? Navigator.popAndPushNamed(context, 'Appointment')
-              //                 : FormHelper.showMessage(
-              //               context,
-              //               getTranslated(context, home_medicineOrder_alert_title).toString(),
-              //               getTranslated(context, home_medicineOrder_alert_text).toString(),
-              //               getTranslated(context, cancel).toString(),
-              //                   () {
-              //                 Navigator.of(context).pop();
-              //               },
-              //               buttonText2: getTranslated(context, login).toString(),
-              //               isConfirmationDialog: true,
-              //               onPressed2: () {
-              //                 Navigator.pushNamed(context, 'SignIn');
-              //               },
-              //             );
-              //           },
-              //           horizontalTitleGap:2.0,
-              //           leading:Icon(
-              //             Icons.schedule,
-              //             size: 35,
-              //             color:Palette.green,
-              //           ),
-              //           title: Text(
-              //             getTranslated(context, home_appointments).toString(),
-              //             style: TextStyle(
-              //               fontSize: width * 0.04,
-              //               color: Palette.dark_blue,
-              //             ),
-              //           ),
-              //         ),
-              //         Container(
-              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              //           child: Column(
-              //             children: [
-              //               DottedLine(
-              //                 direction: Axis.horizontal,
-              //                 lineLength: double.infinity,
-              //                 lineThickness: 1.0,
-              //                 dashLength: 3.0,
-              //                 dashColor: Palette.dash_line,
-              //                 dashRadius: 0.0,
-              //                 dashGapLength: 1.0,
-              //                 dashGapColor: Palette.transparent,
-              //                 dashGapRadius: 0.0,
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //         /*ListTile(
-              //           onTap: () {
-              //             SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
-              //                 ? Navigator.popAndPushNamed(context, 'Favoritedoctor')
-              //                 : FormHelper.showMessage(
-              //               context,
-              //               getTranslated(context, home_favoriteDoctor_alert_title).toString(),
-              //               getTranslated(context, home_favoriteDoctor_alert_text).toString(),
-              //               getTranslated(context, cancel).toString(),
-              //                   () {
-              //                 Navigator.of(context).pop();
-              //               },
-              //               buttonText2: getTranslated(context, login).toString(),
-              //               isConfirmationDialog: true,
-              //               onPressed2: () {
-              //                 Navigator.pushNamed(context, 'SignIn');
-              //               },
-              //             );
-              //           },
-              //           horizontalTitleGap:2.0,
-              //           leading:Icon(
-              //             Icons.ten_k_rounded,
-              //             size: 35,
-              //             color:Palette.green,
-              //           ),
-              //           title: Text(
-              //             getTranslated(context, home_favoritesDoctor).toString(),
-              //             style: TextStyle(
-              //               fontSize: width * 0.04,
-              //               color: Palette.dark_blue,
-              //             ),
-              //           ),
-              //         ),
-              //         Container(
-              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              //           child: Column(
-              //             children: [
-              //               DottedLine(
-              //                 direction: Axis.horizontal,
-              //                 lineLength: double.infinity,
-              //                 lineThickness: 1.0,
-              //                 dashLength: 3.0,
-              //                 dashColor: Palette.dash_line,
-              //                 dashRadius: 0.0,
-              //                 dashGapLength: 1.0,
-              //                 dashGapColor: Palette.transparent,
-              //                 dashGapRadius: 0.0,
-              //               )
-              //             ],
-              //           ),
-              //         ), */
-              //         ListTile(
-              //           onTap: () {
-              //             Navigator.popAndPushNamed(context, 'Medicine');
-              //           },
-              //           horizontalTitleGap:2.0,
-              //           leading:Icon(
-              //             Icons.local_hospital,
-              //             size: 35,
-              //             color:Palette.green,
-              //           ),
-              //           title: Text(
-              //             getTranslated(context, home_medicineBuy).toString(),
-              //             style: TextStyle(
-              //               fontSize: width * 0.04,
-              //               color: Palette.dark_blue,
-              //             ),
-              //           ),
-              //         ),
-              //         Container(
-              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              //           child: Column(
-              //             children: [
-              //               DottedLine(
-              //                 direction: Axis.horizontal,
-              //                 lineLength: double.infinity,
-              //                 lineThickness: 1.0,
-              //                 dashLength: 3.0,
-              //                 dashColor: Palette.dash_line,
-              //                 dashRadius: 0.0,
-              //                 dashGapLength: 1.0,
-              //                 dashGapColor: Palette.transparent,
-              //                 dashGapRadius: 0.0,
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //         ListTile(
-              //           onTap: () {
-              //             Navigator.popAndPushNamed(context, 'Product');
-              //           },
-              //           horizontalTitleGap:2.0,
-              //           leading:Icon(
-              //             Icons.medical_services,
-              //             size: 35,
-              //             color:Palette.green,
-              //           ),
-              //           title: Text(
-              //             getTranslated(context, home_productBuy).toString(),
-              //             style: TextStyle(
-              //               fontSize: width * 0.04,
-              //               color: Palette.dark_blue,
-              //             ),
-              //           ),
-              //         ),
-              //         Container(
-              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              //           child: Column(
-              //             children: [
-              //               DottedLine(
-              //                 direction: Axis.horizontal,
-              //                 lineLength: double.infinity,
-              //                 lineThickness: 1.0,
-              //                 dashLength: 3.0,
-              //                 dashColor: Palette.dash_line,
-              //                 dashRadius: 0.0,
-              //                 dashGapLength: 1.0,
-              //                 dashGapColor: Palette.transparent,
-              //                 dashGapRadius: 0.0,
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //         ExpansionTile(
-              //           title: new Text('My Orders', style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),),
-              //           children: <Widget>[
-              //             Column(
-              //               children: <Widget>[
-              //                 ListTile(
-              //                   onTap: () {
-              //                     SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
-              //                         ? Navigator.popAndPushNamed(context, 'MedicineOrder')
-              //                         : FormHelper.showMessage(
-              //                       context,
-              //                       getTranslated(context, home_medicineBuy_alert_title).toString(),
-              //                       getTranslated(context, home_medicineBuy_alert_text).toString(),
-              //                       getTranslated(context, cancel).toString(),
-              //                           () {
-              //                         Navigator.of(context).pop();
-              //                       },
-              //                       buttonText2: getTranslated(context, login).toString(),
-              //                       isConfirmationDialog: true,
-              //                       onPressed2: () {
-              //                         Navigator.pushNamed(context, 'SignIn');
-              //                       },
-              //                     );
-              //                   },
-              //                   horizontalTitleGap:1.0,
-              //                   leading:Icon(
-              //                     Icons.circle,
-              //                     size: 25,
-              //                     color:Palette.green,
-              //                   ),
-              //                   title: Text(
-              //                     getTranslated(context, home_orderHistory).toString(),
-              //                     style: TextStyle(
-              //                       fontSize: width * 0.04,
-              //                       color: Palette.dark_blue,
-              //                     ),
-              //                   ),
-              //                 ),
-              //                 ListTile(
-              //                   onTap: () {
-              //                     SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
-              //                         ? Navigator.popAndPushNamed(context, 'ProductOrder')
-              //                         : FormHelper.showMessage(
-              //                       context,
-              //                       getTranslated(context, home_medicineBuy_alert_title).toString(),
-              //                       getTranslated(context, home_medicineBuy_alert_text).toString(),
-              //                       getTranslated(context, cancel).toString(),
-              //                           () {
-              //                         Navigator.of(context).pop();
-              //                       },
-              //                       buttonText2: getTranslated(context, login).toString(),
-              //                       isConfirmationDialog: true,
-              //                       onPressed2: () {
-              //                         Navigator.pushNamed(context, 'SignIn');
-              //                       },
-              //                     );
-              //                   },
-              //                   horizontalTitleGap:1.0,
-              //                   leading:Icon(
-              //                     Icons.circle,
-              //                     size: 25,
-              //                     color:Palette.green,
-              //                   ),
-              //                   title: Text(
-              //                     getTranslated(context, home_productOrderHistory).toString(),
-              //                     style: TextStyle(
-              //                       fontSize: width * 0.04,
-              //                       color: Palette.dark_blue,
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ],
-              //             ),
-              //           ],
-              //         ),
-              //         Container(
-              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              //           child: Column(
-              //             children: [
-              //               DottedLine(
-              //                 direction: Axis.horizontal,
-              //                 lineLength: double.infinity,
-              //                 lineThickness: 1.0,
-              //                 dashLength: 3.0,
-              //                 dashColor: Palette.dash_line,
-              //                 dashRadius: 0.0,
-              //                 dashGapLength: 1.0,
-              //                 dashGapColor: Palette.transparent,
-              //                 dashGapRadius: 0.0,
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //         ListTile(
-              //           onTap: () {
-              //             Navigator.popAndPushNamed(context, 'HealthTips');
-              //           },
-              //           horizontalTitleGap:2.0,
-              //           leading:Icon(
-              //             Icons.coffee,
-              //             size: 35,
-              //             color:Palette.green,
-              //           ),
-              //           title: Text(
-              //             getTranslated(context, home_healthTips).toString(),
-              //             style: TextStyle(
-              //               fontSize: width * 0.04,
-              //               color: Palette.dark_blue,
-              //             ),
-              //           ),
-              //         ),
-              //         Container(
-              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              //           child: Column(
-              //             children: [
-              //               DottedLine(
-              //                 direction: Axis.horizontal,
-              //                 lineLength: double.infinity,
-              //                 lineThickness: 1.0,
-              //                 dashLength: 3.0,
-              //                 dashColor: Palette.dash_line,
-              //                 dashRadius: 0.0,
-              //                 dashGapLength: 1.0,
-              //                 dashGapColor: Palette.transparent,
-              //                 dashGapRadius: 0.0,
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //         ListTile(
-              //           onTap: () {
-              //             Navigator.popAndPushNamed(context, 'Offer');
-              //           },
-              //           horizontalTitleGap:2.0,
-              //           leading:Icon(
-              //             Icons.local_offer,
-              //             size: 35,
-              //             color:Palette.green,
-              //           ),
-              //           title: Text(
-              //             getTranslated(context, home_offers).toString(),
-              //             style: TextStyle(
-              //               fontSize: width * 0.04,
-              //               color: Palette.dark_blue,
-              //             ),
-              //           ),
-              //         ),
-              //         Container(
-              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              //           child: Column(
-              //             children: [
-              //               DottedLine(
-              //                 direction: Axis.horizontal,
-              //                 lineLength: double.infinity,
-              //                 lineThickness: 1.0,
-              //                 dashLength: 3.0,
-              //                 dashColor: Palette.dash_line,
-              //                 dashRadius: 0.0,
-              //                 dashGapLength: 1.0,
-              //                 dashGapColor: Palette.transparent,
-              //                 dashGapRadius: 0.0,
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //         ListTile(
-              //           onTap: () {
-              //             SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
-              //                 ? Navigator.popAndPushNamed(context, 'notifications')
-              //                 : FormHelper.showMessage(
-              //               context,
-              //               getTranslated(context, home_notification_alert_title).toString(),
-              //               getTranslated(context, home_notification_alert_text).toString(),
-              //               getTranslated(context, cancel).toString(),
-              //                   () {
-              //                 Navigator.of(context).pop();
-              //               },
-              //               buttonText2: getTranslated(context, login).toString(),
-              //               isConfirmationDialog: true,
-              //               onPressed2: () {
-              //                 Navigator.pushNamed(context, 'SignIn');
-              //               },
-              //             );
-              //           },
-              //           horizontalTitleGap:2.0,
-              //           leading:Icon(
-              //             Icons.doorbell,
-              //             size: 35,
-              //             color:Palette.green,
-              //           ),
-              //           title: Text(
-              //             getTranslated(context, home_notification).toString(),
-              //             style: TextStyle(
-              //               fontSize: width * 0.04,
-              //               color: Palette.dark_blue,
-              //             ),
-              //           ),
-              //         ),
-              //         Container(
-              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              //           child: Column(
-              //             children: [
-              //               DottedLine(
-              //                 direction: Axis.horizontal,
-              //                 lineLength: double.infinity,
-              //                 lineThickness: 1.0,
-              //                 dashLength: 3.0,
-              //                 dashColor: Palette.dash_line,
-              //                 dashRadius: 0.0,
-              //                 dashGapLength: 1.0,
-              //                 dashGapColor: Palette.transparent,
-              //                 dashGapRadius: 0.0,
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //         ListTile(
-              //           onTap: () {
-              //             Navigator.popAndPushNamed(context, 'Setting');
-              //           },
-              //           horizontalTitleGap:2.0,
-              //           leading:Icon(
-              //             Icons.app_settings_alt,
-              //             size: 35,
-              //             color:Palette.green,
-              //           ),
-              //           title: Text(
-              //             getTranslated(context, home_settings).toString(),
-              //             style: TextStyle(
-              //               fontSize: width * 0.04,
-              //               color: Palette.dark_blue,
-              //             ),
-              //           ),
-              //         ),
-              //         Container(
-              //           margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              //           child: Column(
-              //             children: [
-              //               DottedLine(
-              //                 direction: Axis.horizontal,
-              //                 lineLength: double.infinity,
-              //                 lineThickness: 1.0,
-              //                 dashLength: 2.0,
-              //                 dashColor: Palette.dash_line,
-              //                 dashRadius: 0.0,
-              //                 dashGapLength: 1.0,
-              //                 dashGapColor: Palette.transparent,
-              //                 dashGapRadius: 0.0,
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //         ListTile(
-              //           title: SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
-              //               ? GestureDetector(
-              //             onTap: () {
-              //               FormHelper.showMessage(
-              //                 context,
-              //                 getTranslated(context, home_logout_alert_title).toString(),
-              //                 getTranslated(context, home_logout_alert_text).toString(),
-              //                 getTranslated(context, cancel).toString(),
-              //                     () {
-              //                   Navigator.of(context).pop();
-              //                 },
-              //                 buttonText2: getTranslated(context, home_logout_alert_title).toString(),
-              //                 isConfirmationDialog: true,
-              //                 onPressed2: () {
-              //                   Preferences.checkNetwork().then((value) => value == true ? logoutUser() : print('No int'));
-              //                 },
-              //               );
-              //             },
-              //             child: Text(
-              //               getTranslated(context, home_logout).toString(),
-              //               style: TextStyle(
-              //                 fontSize: width * 0.04,
-              //                 color: Palette.dark_blue,
-              //                 //backgroundColor:Palette.dark_blue,
-              //               ),
-              //             ),
-              //           )
-              //               : Text(
-              //             '',
-              //             style: TextStyle(
-              //               fontSize: width * 0.04,
-              //               color: Palette.dark_blue,
-              //             ),
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              //
-              // )
+              Expanded(
+                flex: 12,
+                child: Container(
+                  margin: EdgeInsets.only(left: 5, right: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ListTile(
+                        onTap: () {
+                          Navigator.popAndPushNamed(context, 'Specialist');
+                        },
+                        horizontalTitleGap:2.0,
+                        leading:Icon(
+                          Icons.medication,
+                          size: 35,
+                          color:Palette.green,
+                        ),
+                        title: Text('Specialist',
+                          //getTranslated(context, home_book_appointment).toString(),
+                          style: TextStyle(
+                            fontSize: width * 0.04,
+                            color: Palette.dark_blue,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        child: Column(
+                          children: [
+                            DottedLine(
+                              direction: Axis.horizontal,
+                              lineLength: double.infinity,
+                              lineThickness: 1.0,
+                              dashLength: 3.0,
+                              dashColor: Palette.dash_line,
+                              dashRadius: 0.0,
+                              dashGapLength: 1.0,
+                              dashGapColor: Palette.transparent,
+                              dashGapRadius: 0.0,
+                            )
+                          ],
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          // SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+                          //     ? Navigator.popAndPushNamed(context, 'Appointment')
+                          //     : FormHelper.showMessage(
+                          //   context,
+                          //   getTranslated(context, home_medicineOrder_alert_title).toString(),
+                          //   getTranslated(context, home_medicineOrder_alert_text).toString(),
+                          //   getTranslated(context, cancel).toString(),
+                          //       () {
+                          //     Navigator.of(context).pop();
+                          //   },
+                          //   buttonText2: getTranslated(context, login).toString(),
+                          //   isConfirmationDialog: true,
+                          //   onPressed2: () {
+                          //     Navigator.pushNamed(context, 'SignIn');
+                          //   },
+                          // );
+                        },
+                        horizontalTitleGap:2.0,
+                        leading:Icon(
+                          Icons.schedule,
+                          size: 35,
+                          color:Palette.green,
+                        ),
+                        title: Text('Appointment',
+                          //getTranslated(context, home_appointments).toString(),
+                          style: TextStyle(
+                            fontSize: width * 0.04,
+                            color: Palette.dark_blue,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        child: Column(
+                          children: [
+                            DottedLine(
+                              direction: Axis.horizontal,
+                              lineLength: double.infinity,
+                              lineThickness: 1.0,
+                              dashLength: 3.0,
+                              dashColor: Palette.dash_line,
+                              dashRadius: 0.0,
+                              dashGapLength: 1.0,
+                              dashGapColor: Palette.transparent,
+                              dashGapRadius: 0.0,
+                            )
+                          ],
+                        ),
+                      ),
+                      /*ListTile(
+                        onTap: () {
+                          SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+                              ? Navigator.popAndPushNamed(context, 'Favoritedoctor')
+                              : FormHelper.showMessage(
+                            context,
+                            getTranslated(context, home_favoriteDoctor_alert_title).toString(),
+                            getTranslated(context, home_favoriteDoctor_alert_text).toString(),
+                            getTranslated(context, cancel).toString(),
+                                () {
+                              Navigator.of(context).pop();
+                            },
+                            buttonText2: getTranslated(context, login).toString(),
+                            isConfirmationDialog: true,
+                            onPressed2: () {
+                              Navigator.pushNamed(context, 'SignIn');
+                            },
+                          );
+                        },
+                        horizontalTitleGap:2.0,
+                        leading:Icon(
+                          Icons.ten_k_rounded,
+                          size: 35,
+                          color:Palette.green,
+                        ),
+                        title: Text(
+                          getTranslated(context, home_favoritesDoctor).toString(),
+                          style: TextStyle(
+                            fontSize: width * 0.04,
+                            color: Palette.dark_blue,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        child: Column(
+                          children: [
+                            DottedLine(
+                              direction: Axis.horizontal,
+                              lineLength: double.infinity,
+                              lineThickness: 1.0,
+                              dashLength: 3.0,
+                              dashColor: Palette.dash_line,
+                              dashRadius: 0.0,
+                              dashGapLength: 1.0,
+                              dashGapColor: Palette.transparent,
+                              dashGapRadius: 0.0,
+                            )
+                          ],
+                        ),
+                      ), */
+                      ListTile(
+                        onTap: () {
+                          Navigator.popAndPushNamed(context, 'Medicine');
+                        },
+                        horizontalTitleGap:2.0,
+                        leading:Icon(
+                          Icons.local_hospital,
+                          size: 35,
+                          color:Palette.green,
+                        ),
+                        title: Text('Medicine',
+                          //getTranslated(context, home_medicineBuy).toString(),
+                          style: TextStyle(
+                            fontSize: width * 0.04,
+                            color: Palette.dark_blue,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        child: Column(
+                          children: [
+                            DottedLine(
+                              direction: Axis.horizontal,
+                              lineLength: double.infinity,
+                              lineThickness: 1.0,
+                              dashLength: 3.0,
+                              dashColor: Palette.dash_line,
+                              dashRadius: 0.0,
+                              dashGapLength: 1.0,
+                              dashGapColor: Palette.transparent,
+                              dashGapRadius: 0.0,
+                            )
+                          ],
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.popAndPushNamed(context, 'Product');
+                        },
+                        horizontalTitleGap:2.0,
+                        leading:Icon(
+                          Icons.medical_services,
+                          size: 35,
+                          color:Palette.green,
+                        ),
+                        title: Text('Product',
+                          //getTranslated(context, home_productBuy).toString(),
+                          style: TextStyle(
+                            fontSize: width * 0.04,
+                            color: Palette.dark_blue,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        child: Column(
+                          children: [
+                            DottedLine(
+                              direction: Axis.horizontal,
+                              lineLength: double.infinity,
+                              lineThickness: 1.0,
+                              dashLength: 3.0,
+                              dashColor: Palette.dash_line,
+                              dashRadius: 0.0,
+                              dashGapLength: 1.0,
+                              dashGapColor: Palette.transparent,
+                              dashGapRadius: 0.0,
+                            )
+                          ],
+                        ),
+                      ),
+                      ExpansionTile(
+                        title: new Text('My Orders', style: new TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),),
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              ListTile(
+                                onTap: () {
+                                  // SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+                                  //     ? Navigator.popAndPushNamed(context, 'MedicineOrder')
+                                  //     : FormHelper.showMessage(
+                                  //   context,
+                                  //   getTranslated(context, home_medicineBuy_alert_title).toString(),
+                                  //   getTranslated(context, home_medicineBuy_alert_text).toString(),
+                                  //   getTranslated(context, cancel).toString(),
+                                  //       () {
+                                  //     Navigator.of(context).pop();
+                                  //   },
+                                  //   buttonText2: getTranslated(context, login).toString(),
+                                  //   isConfirmationDialog: true,
+                                  //   onPressed2: () {
+                                  //     Navigator.pushNamed(context, 'SignIn');
+                                  //   },
+                                  // );
+                                },
+                                horizontalTitleGap:1.0,
+                                leading:Icon(
+                                  Icons.circle,
+                                  size: 25,
+                                  color:Palette.green,
+                                ),
+                                title: Text('MedicineOrder',
+                                  //getTranslated(context, home_orderHistory).toString(),
+                                  style: TextStyle(
+                                    fontSize: width * 0.04,
+                                    color: Palette.dark_blue,
+                                  ),
+                                ),
+                              ),
+                              ListTile(
+                                onTap: () {
+                                  // SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+                                  //     ? Navigator.popAndPushNamed(context, 'ProductOrder')
+                                  //     : FormHelper.showMessage(
+                                  //   context,
+                                  //   getTranslated(context, home_medicineBuy_alert_title).toString(),
+                                  //   getTranslated(context, home_medicineBuy_alert_text).toString(),
+                                  //   getTranslated(context, cancel).toString(),
+                                  //       () {
+                                  //     Navigator.of(context).pop();
+                                  //   },
+                                  //   buttonText2: getTranslated(context, login).toString(),
+                                  //   isConfirmationDialog: true,
+                                  //   onPressed2: () {
+                                  //     Navigator.pushNamed(context, 'SignIn');
+                                  //   },
+                                  // );
+                                },
+                                horizontalTitleGap:1.0,
+                                leading:Icon(
+                                  Icons.circle,
+                                  size: 25,
+                                  color:Palette.green,
+                                ),
+                                title: Text('ProductOrder',
+                                  //getTranslated(context, home_productOrderHistory).toString(),
+                                  style: TextStyle(
+                                    fontSize: width * 0.04,
+                                    color: Palette.dark_blue,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        child: Column(
+                          children: [
+                            DottedLine(
+                              direction: Axis.horizontal,
+                              lineLength: double.infinity,
+                              lineThickness: 1.0,
+                              dashLength: 3.0,
+                              dashColor: Palette.dash_line,
+                              dashRadius: 0.0,
+                              dashGapLength: 1.0,
+                              dashGapColor: Palette.transparent,
+                              dashGapRadius: 0.0,
+                            )
+                          ],
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.popAndPushNamed(context, 'HealthTips');
+                        },
+                        horizontalTitleGap:2.0,
+                        leading:Icon(
+                          Icons.coffee,
+                          size: 35,
+                          color:Palette.green,
+                        ),
+                        title: Text('HealthTips',
+                          //getTranslated(context, home_healthTips).toString(),
+                          style: TextStyle(
+                            fontSize: width * 0.04,
+                            color: Palette.dark_blue,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        child: Column(
+                          children: [
+                            DottedLine(
+                              direction: Axis.horizontal,
+                              lineLength: double.infinity,
+                              lineThickness: 1.0,
+                              dashLength: 3.0,
+                              dashColor: Palette.dash_line,
+                              dashRadius: 0.0,
+                              dashGapLength: 1.0,
+                              dashGapColor: Palette.transparent,
+                              dashGapRadius: 0.0,
+                            )
+                          ],
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.popAndPushNamed(context, 'Offer');
+                        },
+                        horizontalTitleGap:2.0,
+                        leading:Icon(
+                          Icons.local_offer,
+                          size: 35,
+                          color:Palette.green,
+                        ),
+                        title: Text('Offer',
+                          //getTranslated(context, home_offers).toString(),
+                          style: TextStyle(
+                            fontSize: width * 0.04,
+                            color: Palette.dark_blue,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        child: Column(
+                          children: [
+                            DottedLine(
+                              direction: Axis.horizontal,
+                              lineLength: double.infinity,
+                              lineThickness: 1.0,
+                              dashLength: 3.0,
+                              dashColor: Palette.dash_line,
+                              dashRadius: 0.0,
+                              dashGapLength: 1.0,
+                              dashGapColor: Palette.transparent,
+                              dashGapRadius: 0.0,
+                            )
+                          ],
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          // SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+                          //     ? Navigator.popAndPushNamed(context, 'notifications')
+                          //     : FormHelper.showMessage(
+                          //   context,
+                          //   getTranslated(context, home_notification_alert_title).toString(),
+                          //   getTranslated(context, home_notification_alert_text).toString(),
+                          //   getTranslated(context, cancel).toString(),
+                          //       () {
+                          //     Navigator.of(context).pop();
+                          //   },
+                          //   buttonText2: getTranslated(context, login).toString(),
+                          //   isConfirmationDialog: true,
+                          //   onPressed2: () {
+                          //     Navigator.pushNamed(context, 'SignIn');
+                          //   },
+                          // );
+                        },
+                        horizontalTitleGap:2.0,
+                        leading:Icon(
+                          Icons.doorbell,
+                          size: 35,
+                          color:Palette.green,
+                        ),
+                        title: Text('notifications',
+                          //getTranslated(context, home_notification).toString(),
+                          style: TextStyle(
+                            fontSize: width * 0.04,
+                            color: Palette.dark_blue,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        child: Column(
+                          children: [
+                            DottedLine(
+                              direction: Axis.horizontal,
+                              lineLength: double.infinity,
+                              lineThickness: 1.0,
+                              dashLength: 3.0,
+                              dashColor: Palette.dash_line,
+                              dashRadius: 0.0,
+                              dashGapLength: 1.0,
+                              dashGapColor: Palette.transparent,
+                              dashGapRadius: 0.0,
+                            )
+                          ],
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.popAndPushNamed(context, 'Setting');
+                        },
+                        horizontalTitleGap:2.0,
+                        leading:Icon(
+                          Icons.app_settings_alt,
+                          size: 35,
+                          color:Palette.green,
+                        ),
+                        title: Text('Setting',
+                          //getTranslated(context, home_settings).toString(),
+                          style: TextStyle(
+                            fontSize: width * 0.04,
+                            color: Palette.dark_blue,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        child: Column(
+                          children: [
+                            DottedLine(
+                              direction: Axis.horizontal,
+                              lineLength: double.infinity,
+                              lineThickness: 1.0,
+                              dashLength: 2.0,
+                              dashColor: Palette.dash_line,
+                              dashRadius: 0.0,
+                              dashGapLength: 1.0,
+                              dashGapColor: Palette.transparent,
+                              dashGapRadius: 0.0,
+                            )
+                          ],
+                        ),
+                      ),
+                      // ListTile(
+                      //   title: SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+                      //       ? GestureDetector(
+                      //     onTap: () {
+                      //       // FormHelper.showMessage(
+                      //       //   context,
+                      //       //   getTranslated(context, home_logout_alert_title).toString(),
+                      //       //   getTranslated(context, home_logout_alert_text).toString(),
+                      //       //   getTranslated(context, cancel).toString(),
+                      //       //       () {
+                      //       //     Navigator.of(context).pop();
+                      //       //   },
+                      //       //   buttonText2: getTranslated(context, home_logout_alert_title).toString(),
+                      //       //   isConfirmationDialog: true,
+                      //       //   onPressed2: () {
+                      //       //     Preferences.checkNetwork().then((value) => value == true ? logoutUser() : print('No int'));
+                      //       //   },
+                      //       // );
+                      //     },
+                      //     child: Text('logout',
+                      //       //getTranslated(context, home_logout).toString(),
+                      //       style: TextStyle(
+                      //         fontSize: width * 0.04,
+                      //         color: Palette.dark_blue,
+                      //         //backgroundColor:Palette.dark_blue,
+                      //       ),
+                      //     ),
+                      //   )
+                      //       : Text(
+                      //     '',
+                      //     style: TextStyle(
+                      //       fontSize: width * 0.04,
+                      //       color: Palette.dark_blue,
+                      //     ),
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+
+              )
             ],
           ),
         ),
@@ -860,25 +875,25 @@ class _HomeState extends State<HomeCopy> {
                       children: [
                         // GestureDetector(
                         //   onTap: () {
-                        //     _passIsWhere();
-                        //     SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
-                        //         ? Navigator.pushNamed(context, 'ShowLocation')
-                        //         : SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
-                        //         ? Navigator.popAndPushNamed(context, 'MedicineOrder')
-                        //         : FormHelper.showMessage(
-                        //       context,
-                        //       getTranslated(context, home_selectAddress_alert_title).toString(),
-                        //       getTranslated(context, home_selectAddress_alert_text).toString(),
-                        //       getTranslated(context, cancel).toString(),
-                        //           () {
-                        //         Navigator.of(context).pop();
-                        //       },
-                        //       buttonText2: getTranslated(context, login).toString(),
-                        //       isConfirmationDialog: true,
-                        //       onPressed2: () {
-                        //         Navigator.pushNamed(context, 'SignIn');
-                        //       },
-                        //     );
+                        //     // _passIsWhere();
+                        //     // SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+                        //     //     ? Navigator.pushNamed(context, 'ShowLocation')
+                        //     //     : SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
+                        //     //     ? Navigator.popAndPushNamed(context, 'MedicineOrder')
+                        //     //     : FormHelper.showMessage(
+                        //     //   context,
+                        //     //   getTranslated(context, home_selectAddress_alert_title).toString(),
+                        //     //   getTranslated(context, home_selectAddress_alert_text).toString(),
+                        //     //   getTranslated(context, cancel).toString(),
+                        //     //       () {
+                        //     //     Navigator.of(context).pop();
+                        //     //   },
+                        //     //   buttonText2: getTranslated(context, login).toString(),
+                        //     //   isConfirmationDialog: true,
+                        //     //   onPressed2: () {
+                        //     //     Navigator.pushNamed(context, 'SignIn');
+                        //     //   },
+                        //     // );
                         //   },
                         //   child: Row(
                         //     children: [
@@ -896,8 +911,8 @@ class _HomeState extends State<HomeCopy> {
                         //             width: 120,
                         //             padding: EdgeInsets.only(top: height * 0.01, left: width * 0.03, right: width * 0.03),
                         //             child: _Address == null || _Address == ""
-                        //                 ? Text(
-                        //               getTranslated(context, home_selectAddress).toString(),
+                        //                 ? Text("dd",
+                        //              // getTranslated(context, home_selectAddress).toString(),
                         //               overflow: TextOverflow.ellipsis,
                         //               style: TextStyle(
                         //                 fontSize: width * 0.035,
